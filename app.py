@@ -26,6 +26,7 @@ def expirelist():
 my_logger = None
 
 if __name__ == '__main__':
+    import os
 
     hostIP = os.environ.get('APP_HOST')
     if hostIP == None:
