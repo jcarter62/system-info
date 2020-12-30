@@ -1,0 +1,35 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}{{ context.title }}{% endblock %}
+{% block navbar %}
+    <div class="navbar navbar-grey" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span id="A" class="icon-bar"></span>
+                    <span id="B" class="icon-bar"></span>
+                    <span id="C" class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand datatext" href="/" title="System Info">System Info</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <form class="navbar-form navbar-right">
+                    <img class="iconx2" src="{{ url_for('static', filename='icons/201-open-door.png') }}" title="Logout"
+                         onclick="logout_button()"/>
+                    &nbsp;&nbsp;
+                    <img class="icon" src="{{ url_for('static', filename='icons/201-idea.png') }}" title="About"
+                         onclick="about_button()"/>
+                </form>
+                <ul class="nav navbar-nav">
+                    <li><a href="/"><img class="iconx2" src="{{ url_for('static', filename='icons/201-home.png') }}" title="Home" /></a>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        {% block page_content %}
+        {% endblock %}
+    </div>
+{% endblock %}

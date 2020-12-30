@@ -1,0 +1,85 @@
+html { font-size: 100%; }
+
+/*
+*  Ref: https://css-tricks.com/fitting-text-to-a-container/
+*/
+.datatext {
+    font-size: 2vw;
+    font-family: Helvetica;
+    /*font-size: 1.5em;*/
+}
+
+.listtext {
+    font-size: 2vw;
+    font-family: Courier;
+}
+
+.listtext-small {
+    font-size: 1vw;
+    font-family: Courier;
+}
+
+.highlight-row {
+    font-weight: bold;
+    color: darkred;
+}
+
+.alignleft {
+    text-align: left;
+}
+
+.alignright {
+    text-align: right;
+}
+
+.icon {
+    height: 1.5em;
+}
+
+.iconx2 {
+    height: 2.0em;
+}
+
+.navbar-grey {
+    background-color: #AAAAAA;
+    border-color: #AAAAAA;
+    font-weight: bolder;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+/* Ref: https://www.w3schools.com/howto/howto_css_fixed_footer.asp */
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    color: white;
+    text-align: left;
+    font-size: smaller;
+    font-style: italic;
+}
+
+.body {
+    font-size: 1em;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.dropzone {
+    width: 100%;
+    height: 100px;
+    border: 2px dashed #ccc;
+    color: #ccc;
+    align-self: center;
+    line-height: 100px;
+    text-align: center;
+}
+
+.dropzone.dragover {
+    border-color: #000;
+    color: #000;
+}
+

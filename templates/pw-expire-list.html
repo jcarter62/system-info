@@ -1,0 +1,53 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>{{ context.title }}</title>#}
+{#</head>#}
+{#<body>#}
+{#    <table>#}
+{#        <thead><td>Name</td><td>Days Until Password Expire</td></thead>#}
+{#        {% for row in context.data %}#}
+{#            <tr>#}
+{#            <td>{{ row.name }}</td>#}
+{#            <td>{{ row.days }}</td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#    </table>#}
+{#</body>#}
+{#</html>#}
+
+{% extends "base.html" %}
+
+{% block page_content %}
+    {% block content %}
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+        <div class="container">
+            <div class="page-header datatext">
+                <div class="jumbotron tabletext">
+                    <table class="table-striped">
+                        <thead>
+                        <tr>
+                            <td>User Name</td>
+                            <td>Days Until Expire</td>
+                        </tr>
+                        </thead>
+                        {% for row in context.data %}
+                            {% if row.days < 45 %}
+                                <tr class="alert-danger">
+                            {% else %}
+                                <tr>
+                            {% endif %}
+                                <td>{{ row.name }}</td>
+                                <td>{{ row.days }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <hr>
+            {% include 'footer.html' %}
+        </div>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/functions.js') }}"></script>
+    {% endblock %}
+{% endblock %}
