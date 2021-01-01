@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_bootstrap import Bootstrap
 from waitress import serve
 from pw_expire_list import Exec
-from ipcheck import IPCheck
 import os
 
 app = Flask(__name__)
@@ -15,6 +14,14 @@ def root_route():
     }
     return render_template('home.html', context=context)
 
+@app.route('/not-authorized')
+def not_auth():
+    context = {
+        'title': 'Not Authorized'
+    }
+    return render_template('not-authorized.html', context=context)
+
+
 @app.route('/pw-expire-list')
 def expirelist():
     elist = Exec()
@@ -26,38 +33,32 @@ def expirelist():
 
 @app.before_request
 def before_request():
+    from utils import IPCheck
     r = request
-    ip = r.remote_addr
-    ip_check = IPCheck(ip)
-    location = ''
-    if ip_check.isLocal:
-        location = location + 'local '
-    if ip_check.isAdmin:
-        location = location + 'admin '
+    requested_path = request.full_path
+    requested_path = requested_path.replace('?', '')
+    print('path = ' + requested_path)
+    if  requested_path[0:7] == '/static' or requested_path == '/' or requested_path == '/not-authorized':
+        pass
+    else:
+        ip = r.remote_addr
+        ip_check = IPCheck(ip)
+        if not ip_check.authorized():
+            return redirect('/not-authorized')
 
-    s = 'request ip = {}, {}'
-    print(s.format(ip, location))
     return
-
 
 
 my_logger = None
 
 if __name__ == '__main__':
-    from evars import HostIP
+    from utils import HostIP
 
     hip = HostIP()
     serverip = hip.ip
+    serverPort = hip.port
 
+    msg = 'Server IP = {} and Port = {}'
+    print(msg.format(serverip, serverPort))
 
-#     hostIP = os.getenv('APP_HOST')
-#     if hostIP == None:
-#         hostIP = '0.0.0.0'
-#         hostIP = '10.100.20.187'
-#
-
-    portNum = os.getenv('APP_PORT')
-    if portNum == None:
-        portNum = 5000
-
-    serve(app, host=serverip, port=portNum)
+    serve(app, host=serverip, port=serverPort)
