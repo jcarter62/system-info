@@ -41,6 +41,7 @@ class IPCheck:
             mlen = len(self.admin_mask)
             shortip = self.ip[0:mlen]
             result = False
+            print('mask cmd: {} == {}'.format(self.admin_mask, shortip))
             if self.admin_mask == shortip:
                 result = True
         else: ## file
@@ -48,8 +49,10 @@ class IPCheck:
             for msk in self.admin_list:
                 mlen = len(msk)
                 shortip = self.ip[0:mlen]
+                print('file cmp: {} == {}'.format(msk, shortip))
                 if msk == shortip:
                     result = True
+        print('isAdmin: {}'.format(str(result)))
         return result
 
     def isLocal(self):
@@ -65,5 +68,6 @@ class IPCheck:
         with open(filename, mode='r') as f:
             for line in f:
                 if line.__len__() > 5:
+                    line = line.replace('\n', '')
                     admin_list.append(line)
         return admin_list
