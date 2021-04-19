@@ -5,7 +5,19 @@ class IPCheck:
 
     def __init__(self, ip):
         self.ip = ip
-        self.admin_mask = os.environ.get('APP_ADMIN_NET')
+        self.admin_type = ''
+
+        file_or_mask = os.environ.get('APP_ADMIN_NET')
+        if file_or_mask.__contains__(os.sep):
+            self.admin_type = 'file'
+        else:
+            self.admin_type = 'mask'
+
+        if self.admin_type == 'mask':
+            self.admin_mask = file_or_mask
+        else:
+            self.admin_list = self.load_admin_list(file_or_mask)
+
         self.local_mask = '127.0.0.1'
         return
 
@@ -25,15 +37,19 @@ class IPCheck:
         return False
 
     def isAdmin(self):
-        if self.admin_mask is None:
-            result = False
-        else:
+        if self.admin_type == 'mask':
             mlen = len(self.admin_mask)
             shortip = self.ip[0:mlen]
             result = False
             if self.admin_mask == shortip:
                 result = True
-
+        else: ## file
+            result = False
+            for msk in self.admin_list:
+                mlen = len(msk)
+                shortip = self.ip[0:mlen]
+                if msk == shortip:
+                    result = True
         return result
 
     def isLocal(self):
@@ -42,3 +58,12 @@ class IPCheck:
         else:
             result = False
         return result
+
+    @staticmethod
+    def load_admin_list(filename) -> list:
+        admin_list = []
+        with open(filename, mode='r') as f:
+            for line in f:
+                if line.__len__() > 5:
+                    admin_list.append(line)
+        return admin_list
