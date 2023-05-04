@@ -2,3 +2,4 @@ flask
 flask-bootstrap
 waitress
 arrow
+python-decouple

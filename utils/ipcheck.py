@@ -1,5 +1,5 @@
 import os
-
+from decouple import config
 
 class IPCheck:
 
@@ -7,7 +7,8 @@ class IPCheck:
         self.ip = ip
         self.admin_type = ''
 
-        file_or_mask = os.environ.get('APP_ADMIN_NET')
+        file_or_mask = config('APP_ADMIN_NET')
+        # file_or_mask = os.environ.get('APP_ADMIN_NET')
         if file_or_mask.__contains__(os.sep):
             self.admin_type = 'file'
         else:

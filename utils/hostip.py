@@ -1,5 +1,5 @@
 import os
-
+from decouple import config
 
 class HostIP:
 
@@ -10,7 +10,7 @@ class HostIP:
 
     def get_app_host(self):
         try:
-            ip = os.environ.get('APP_HOST')
+            ip = config('APP_HOST')
         except:
             ip = None
 
@@ -20,7 +20,7 @@ class HostIP:
 
     def get_app_port(self):
         try:
-            port = os.environ.get('APP_PORT')
+            port = config('APP_PORT')
         except:
             port = None
 
